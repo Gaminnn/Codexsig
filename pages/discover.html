@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Discover CODEX</title>
+    <link rel="stylesheet" href="../index.css" />
+    <link rel="icon" href="../img/codexlogo.png" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../index.html">
+          <img src="../img/codexlogo.png" alt="CODEX" />
+          <span>CODEX SIG</span>
+        </a>
+        <nav class="nav"></nav>
+      </div>
+    </header>
+
+    <main class="container" style="padding: 28px 20px;">
+      <div class="banner" style="margin-bottom: 18px;">
+        <strong>Why CODEX?</strong> Learn, build projects, and collaborate with a supportive community.
+      </div>
+
+      <section class="split">
+        <article class="card">
+          <h2>About CODEX</h2>
+          <p>
+            CODEX is a student-led Special Interest Group focused on software engineering,
+            web development, and collaborative learning. We host weekly sessions, hands-on
+            workshops, and project challenges to help members grow practical skills.
+          </p>
+          <ul>
+            <li>Hands-on coding workshops</li>
+            <li>Peer mentoring and study groups</li>
+            <li>Project showcases and code reviews</li>
+            <li>Industry talks when available</li>
+          </ul>
+        </article>
+
+        <aside class="card">
+          <h2>How to Join</h2>
+          <ol>
+            <li>Create your account</li>
+            <li>Complete registration to CODEX</li>
+            <li>Check announcements and schedule</li>
+          </ol>
+          <div style="margin-top: 12px;">
+            <a class="btn btn-primary" href="../login.html">Register</a>
+            <a class="btn btn-outline" href="../login.html">Login</a>
+          </div>
+        </aside>
+      </section>
+
+      <section style="margin-top: 18px;">
+        <div class="grid three">
+          <article class="card">
+            <h3>Sessions</h3>
+            <p>Weekly learning sessions to sharpen your skills.</p>
+            <a class="link" href="../login.html">See schedule →</a>
+          </article>
+          <article class="card">
+            <h3>Announcements</h3>
+            <p>Stay informed and never miss events.</p>
+            <a class="link" href="../login.html">View updates →</a>
+          </article>
+          <article class="card">
+            <h3>Get Involved</h3>
+            <p>Contribute to projects and present your work.</p>
+            <a class="link" href="../login.html">Your dashboard →</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> CODEX SIG, CCS Department</p>
+        <nav class="footer-nav">
+          <a href="admin.html">Admin</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="../index.js"></script>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+
+</html>
+

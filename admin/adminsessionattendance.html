@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Session Attendance - Admin Dashboard - CODEX SIG</title>
+  <link rel="stylesheet" href="admindashboard.css" />
+  <link rel="stylesheet" href="../css/logout-modal.css" />
+  <link rel="icon" href="../img/codexlogo.png" />
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../img/codexlogo.png" alt="CODEX logo" />
+      <span>CODEX Admin</span>
+    </div>
+    <div class="sidebar-divider"></div>
+    <nav class="sidebar-nav">
+      <a href="/codexsig/Codexregistration/admin/admindashboard.html">Overview</a>
+      <a href="/codexsig/Codexregistration/admin/adminallmembers.html">All Members</a>
+      <a href="/codexsig/Codexregistration/admin/adminannouncement.html">Announcements</a>
+      <a href="/codexsig/Codexregistration/admin/adminsession.html">Sessions</a>
+    </nav>
+    <button class="btn btn-logout-sidebar" id="logoutBtn">Logout</button>
+    <div class="sidebar-footer">
+      
+    </div>
+  </aside>
+
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">☰</button>
+        <h1 id="sessionTitle">Session Attendance</h1>
+        <p id="sessionDetails">Track member attendance and award points.</p>
+      </div>
+    </header>
+
+    <section class="card attendance-section">
+      <div class="section-header">
+        <div class="section-header-top">
+          <h2>Member Attendance</h2>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-success btn-sm" id="presentAllBtn">✅ Present All</button>
+            <button class="btn btn-primary btn-sm" id="backToSessionsBtn">← Back to Sessions</button>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input type="text" id="searchMembers" placeholder=" Search members by name or student number..." class="search-input">
+        </div>
+      </div>
+
+      <div class="attendance-list">
+        <div id="attendanceList">
+          <!-- JS populated -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Points Award Modal -->
+  <div class="modal" id="pointsModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Award Points</h3>
+        <button class="modal-close" id="closePointsModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="pointsForm">
+          <div class="form-group">
+            <label for="memberName">Member Name</label>
+            <input type="text" id="memberName" disabled>
+          </div>
+          <div class="form-group">
+            <label for="pointsInput">Points to Award *</label>
+            <input type="number" id="pointsInput" name="pointsInput" min="0" max="100" placeholder="Enter points" required>
+          </div>
+          <div class="form-group">
+            <label>Quick Select</label>
+            <div class="quick-points-buttons">
+              <button type="button" class="btn btn-sm quick-points" data-points="5">+5</button>
+              <button type="button" class="btn btn-sm quick-points" data-points="10">+10</button>
+              <button type="button" class="btn btn-sm quick-points" data-points="20">+20</button>
+              <button type="button" class="btn btn-sm quick-points" data-points="50">+50</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="cancelPointsBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="submitPointsBtn">Award Points</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Member Detail Modal -->
+  <div class="modal" id="memberDetailModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 id="modalMemberName">Member Details</h3>
+        <button class="modal-close" id="closeMemberDetailModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="member-detail-content">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+            <div>
+              <p><strong>Student Number:</strong> <span id="modalStudentNumber">—</span></p>
+              <p><strong>Program:</strong> <span id="modalProgram">—</span></p>
+            </div>
+            <div>
+              <p><strong>Status:</strong> <span id="modalAttendanceStatus" class="role-badge">—</span></p>
+              <p style="margin-top: 12px;"><strong>Marked:</strong> <span id="modalMarkedDate">—</span></p>
+            </div>
+          </div>
+          <div style="border-top: 1px solid #ddd; padding-top: 16px;">
+            <h4 style="margin-bottom: 12px;">Points Information</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div style="background: #f5f5f5; padding: 12px; border-radius: 4px;">
+                <p style="color: #666; margin: 0 0 8px 0; font-size: 12px;">Base Points</p>
+                <p style="font-size: 20px; font-weight: 600; margin: 0;">20</p>
+              </div>
+              <div style="background: #f5f5f5; padding: 12px; border-radius: 4px;">
+                <p style="color: #666; margin: 0 0 8px 0; font-size: 12px;">Bonus Points</p>
+                <p style="font-size: 20px; font-weight: 600; color: #9e2a2b; margin: 0;" id="modalBonusPointsValue">0</p>
+                <p style="font-size: 11px; color: #888; margin-top: 4px;">Awarded by admin</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="closeMemberDetailBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Confirmation Modal -->
+  <div id="logoutModal" class="logout-modal-overlay">
+    <div class="logout-modal-container">
+      <div class="logout-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </div>
+      <h2 class="logout-modal-title">Logout?</h2>
+      <p class="logout-modal-message">Are you sure you want to logout?</p>
+      <p class="logout-modal-warning">You will need to login again to access the system.</p>
+      <div class="logout-modal-actions">
+        <button class="logout-modal-btn logout-modal-btn-cancel" id="cancelLogoutBtn">Cancel</button>
+        <button class="logout-modal-btn logout-modal-btn-logout" id="confirmLogoutBtn">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/logout-modal-new.js"></script>
+  <script src="adminsessionattendance.js"></script>
+  <script>initLogoutModalNew('admin');</script>
+</body>
+
+</html>

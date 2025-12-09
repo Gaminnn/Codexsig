@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sessions - Admin Dashboard - CODEX SIG</title>
+  <link rel="stylesheet" href="admindashboard.css" />
+  <link rel="stylesheet" href="../css/logout-modal.css" />
+  <link rel="icon" href="../img/codexlogo.png" />
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../img/codexlogo.png" alt="CODEX logo" />
+      <span>CODEX Admin</span>
+    </div>
+    <div class="sidebar-divider"></div>
+    <nav class="sidebar-nav">
+      <a href="/codexsig/Codexregistration/admin/admindashboard.html">Overview</a>
+      <a href="/codexsig/Codexregistration/admin/adminallmembers.html">All Members</a>
+      <a href="/codexsig/Codexregistration/admin/adminannouncement.html">Announcements</a>
+      <a href="/codexsig/Codexregistration/admin/adminsession.html" class="active">Sessions</a>
+      <a href="/codexsig/Codexregistration/admin/adminmemberapproval.html">Member Approval</a>
+      <a href="/codexsig/Codexregistration/admin/adminsettings.html">Settings</a>
+    </nav>
+    <button class="btn btn-logout-sidebar" id="logoutBtn">Logout</button>
+    <div class="sidebar-footer">
+  </aside>
+
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">☰</button>
+        <h1>Sessions Management</h1>
+        <p>Create and manage training sessions for members.</p>
+      </div>
+    </header>
+
+    <section class="card sessions-section">
+      <div class="section-header">
+        <div class="section-header-top">
+          <h2>All Sessions</h2>
+          <button class="btn btn-primary btn-sm" id="createSessionBtn">+ New Session</button>
+        </div>
+        <div class="search-bar">
+          <input type="text" id="searchSessions" placeholder=" Search sessions by title, date, or location..." class="search-input">
+        </div>
+      </div>
+
+      <div class="sessions-list">
+        <div id="sessionsList">
+          <!-- JS populated -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Create/Edit Session Modal -->
+  <div class="modal" id="sessionModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="sessionModalTitle">Create Session</h3>
+        <button class="modal-close" id="closeSessionModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="sessionForm">
+          <div class="form-group">
+            <label for="sessionTitle">Title *</label>
+            <input type="text" id="sessionTitle" name="sessionTitle" placeholder="Enter session title" required>
+          </div>
+          <div class="form-group">
+            <label for="sessionDescription">Description *</label>
+            <textarea id="sessionDescription" name="sessionDescription" rows="6" placeholder="Enter session description..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="sessionDate">Date *</label>
+            <input type="date" id="sessionDate" name="sessionDate" required>
+          </div>
+          <div class="form-group">
+            <label for="sessionStartTime">Start Time *</label>
+            <select id="sessionStartTime" name="sessionStartTime" required>
+              <option value="">Select start time</option>
+              <option value="01:00">1:00 AM</option>
+              <option value="02:00">2:00 AM</option>
+              <option value="03:00">3:00 AM</option>
+              <option value="04:00">4:00 AM</option>
+              <option value="05:00">5:00 AM</option>
+              <option value="06:00">6:00 AM</option>
+              <option value="07:00">7:00 AM</option>
+              <option value="08:00">8:00 AM</option>
+              <option value="09:00">9:00 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="15:00">3:00 PM</option>
+              <option value="16:00">4:00 PM</option>
+              <option value="17:00">5:00 PM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="21:00">9:00 PM</option>
+              <option value="22:00">10:00 PM</option>
+              <option value="23:00">11:00 PM</option>
+              <option value="00:00">12:00 AM</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sessionEndTime">End Time *</label>
+            <select id="sessionEndTime" name="sessionEndTime" required>
+              <option value="">Select end time</option>
+              <option value="01:00">1:00 AM</option>
+              <option value="02:00">2:00 AM</option>
+              <option value="03:00">3:00 AM</option>
+              <option value="04:00">4:00 AM</option>
+              <option value="05:00">5:00 AM</option>
+              <option value="06:00">6:00 AM</option>
+              <option value="07:00">7:00 AM</option>
+              <option value="08:00">8:00 AM</option>
+              <option value="09:00">9:00 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="15:00">3:00 PM</option>
+              <option value="16:00">4:00 PM</option>
+              <option value="17:00">5:00 PM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="21:00">9:00 PM</option>
+              <option value="22:00">10:00 PM</option>
+              <option value="23:00">11:00 PM</option>
+              <option value="00:00">12:00 AM</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sessionLocation">Location *</label>
+            <input type="text" id="sessionLocation" name="sessionLocation" placeholder="Enter session location" required>
+          </div>
+          <div class="form-group">
+            <label>Active Status *</label>
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" name="sessionActive" value="1" required>
+                <span class="radio-custom"></span>
+                <span class="radio-text">Yes</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="sessionActive" value="0" required>
+                <span class="radio-custom"></span>
+                <span class="radio-text">No</span>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="cancelSessionBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="submitSessionBtn">Save Session</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Confirmation Modal -->
+  <div id="logoutModal" class="logout-modal-overlay">
+    <div class="logout-modal-container">
+      <div class="logout-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </div>
+      <h2 class="logout-modal-title">Logout?</h2>
+      <p class="logout-modal-message">Are you sure you want to logout?</p>
+      <p class="logout-modal-warning">You will need to login again to access the system.</p>
+      <div class="logout-modal-actions">
+        <button class="logout-modal-btn logout-modal-btn-cancel" id="cancelLogoutBtn">Cancel</button>
+        <button class="logout-modal-btn logout-modal-btn-logout" id="confirmLogoutBtn">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/logout-modal-new.js"></script>
+  <script src="adminsession.js"></script>
+  <script>initLogoutModalNew('admin');</script>
+</body>
+
+</html>

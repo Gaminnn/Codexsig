@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Announcements - Admin Dashboard - CODEX SIG</title>
+  <link rel="stylesheet" href="admindashboard.css" />
+  <link rel="stylesheet" href="../css/logout-modal.css" />
+  <link rel="icon" href="../img/codexlogo.png" />
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../img/codexlogo.png" alt="CODEX logo" />
+      <span>CODEX Admin</span>
+    </div>
+    <div class="sidebar-divider"></div>
+    <nav class="sidebar-nav">
+      <a href="/codexsig/Codexregistration/admin/admindashboard.html">Overview</a>
+      <a href="/codexsig/Codexregistration/admin/adminallmembers.html">All Members</a>
+      <a href="/codexsig/Codexregistration/admin/adminannouncement.html" class="active">Announcements</a>
+      <a href="/codexsig/Codexregistration/admin/adminsession.html">Sessions</a>
+      <a href="/codexsig/Codexregistration/admin/adminmemberapproval.html">Member Approval</a>
+      <a href="/codexsig/Codexregistration/admin/adminsettings.html">Settings</a>
+    </nav>
+    <button class="btn btn-logout-sidebar" id="logoutBtn">Logout</button>
+    <div class="sidebar-footer">
+  </aside>
+
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">☰</button>
+        <h1>Announcements</h1>
+        <p>Create and manage announcements for members.</p>
+      </div>
+    </header>
+
+    <section class="card announcements-section">
+      <div class="section-header">
+        <h2>All Announcements</h2>
+        <button class="btn btn-primary btn-sm" id="createAnnouncementBtn">+ New Announcement</button>
+      </div>
+
+      <div class="announcements-list">
+        <div id="announcementsList">
+          <!-- JS populated -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Create/Edit Announcement Modal -->
+  <div class="modal" id="announcementModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="announcementModalTitle">Create Announcement</h3>
+        <button class="modal-close" id="closeAnnouncementModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="announcementForm">
+          <div class="form-group">
+            <label for="announcementTitle">Title *</label>
+            <input type="text" id="announcementTitle" name="announcementTitle" placeholder="Enter announcement title" required>
+          </div>
+          <div class="form-group">
+            <label for="announcementType">Type *</label>
+            <select id="announcementType" name="announcementType" required>
+              <option value="">Select type...</option>
+              <option value="general">General</option>
+              <option value="urgent">Urgent</option>
+              <option value="event">Event</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="announcementDescription">Description *</label>
+            <textarea id="announcementDescription" name="announcementDescription" rows="6" placeholder="Enter announcement description..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="publishedDate">Published Date *</label>
+            <input type="datetime-local" id="publishedDate" name="publishedDate" required>
+          </div>
+          <div class="form-group">
+            <label>Active</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="announcementActive" value="1" checked>
+                <span>Yes</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="announcementActive" value="0">
+                <span>No</span>
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="cancelAnnouncementBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="submitAnnouncementBtn">Save Announcement</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- View Announcement Detail Modal -->
+  <div class="modal" id="viewAnnouncementModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3 id="viewAnnouncementTitle">Announcement Details</h3>
+        <button class="modal-close" id="closeViewAnnouncementModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
+          <div>
+            <p><strong>Type:</strong> <span id="viewAnnouncementType" style="display: inline-block; padding: 4px 8px; background: #f0f0f0; border-radius: 4px; font-size: 12px;">—</span></p>
+            <p><strong>Published Date:</strong> <span id="viewAnnouncementDate">—</span></p>
+          </div>
+          <div>
+            <p><strong>Created By:</strong> <span id="viewAnnouncementCreatedBy">—</span></p>
+            <p><strong>Status:</strong> <span id="viewAnnouncementStatus" style="display: inline-block; padding: 4px 8px; background: #e8f5e9; border-radius: 4px; color: #2e7d32; font-size: 12px;">Active</span></p>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 12px;">Description</h4>
+          <p id="viewAnnouncementDescription" style="line-height: 1.6; white-space: pre-wrap; background: #f9f9f9; padding: 16px; border-radius: 4px; color: #333;">—</p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="editViewAnnouncementBtn">Edit</button>
+        <button type="button" class="btn btn-outline" id="closeViewAnnouncementBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Confirmation Modal -->
+  <div id="logoutModal" class="logout-modal-overlay">
+    <div class="logout-modal-container">
+      <div class="logout-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </div>
+      <h2 class="logout-modal-title">Logout?</h2>
+      <p class="logout-modal-message">Are you sure you want to logout?</p>
+      <p class="logout-modal-warning">You will need to login again to access the system.</p>
+      <div class="logout-modal-actions">
+        <button class="logout-modal-btn logout-modal-btn-cancel" id="cancelLogoutBtn">Cancel</button>
+        <button class="logout-modal-btn logout-modal-btn-logout" id="confirmLogoutBtn">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/logout-modal-new.js"></script>
+  <script src="adminannouncement.js"></script>
+  <script>initLogoutModalNew('admin');</script>
+</body>
+
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard - CODEX SIG</title>
+  <link rel="stylesheet" href="admindashboard.css" />
+  <link rel="stylesheet" href="../css/logout-modal.css" />
+  <link rel="icon" href="../img/codexlogo.png" />
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../img/codexlogo.png" alt="CODEX logo" />
+      <span>CODEX Admin</span>
+    </div>
+    <div class="sidebar-divider"></div>
+    <nav class="sidebar-nav">
+      <a href="/codexsig/Codexregistration/admin/admindashboard.html" class="active">Overview</a>
+      <a href="/codexsig/Codexregistration/admin/adminallmembers.html">All Members</a>
+      <a href="/codexsig/Codexregistration/admin/adminannouncement.html">Announcements</a>
+      <a href="/codexsig/Codexregistration/admin/adminsession.html">Sessions</a>
+      <a href="/codexsig/Codexregistration/admin/adminmemberapproval.html">Member Approval</a>
+      <a href="/codexsig/Codexregistration/admin/adminsettings.html">Settings</a>
+    </nav>
+    <button class="btn btn-logout-sidebar" id="logoutBtn">Logout</button>
+    <div class="sidebar-footer">
+  </aside>
+
+  <main class="dashboard">
+    <header class="dashboard-header">
+      <div>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">☰</button>
+        <h1>Admin Control Panel</h1>
+        <p>Manage CODEX SIG announcements, sessions, and member participation.</p>
+      </div>
+    </header>
+
+    <section class="grid stats">
+      <article class="card stat">
+        <span class="label">Total Members</span>
+        <strong id="totalMembers">0</strong>
+        <p>Total verified CODEX members</p>
+      </article>
+      <article class="card stat">
+        <span class="label">Pending Approvals</span>
+        <strong id="pendingApprovals">0</strong>
+        <p>Awaiting review</p>
+      </article>
+      <article class="card stat clickable-stat" id="todaySessionCard">
+        <span class="label">Today's Session</span>
+        <strong id="todaySessionTitle">No session today</strong>
+        <p id="todaySessionTime">Click to manage attendance</p>
+      </article>
+      <article class="card stat">
+        <span class="label">Announcements Today</span>
+        <strong id="announcementToday">0</strong>
+        <p>Posts published</p>
+      </article>
+    </section>
+
+    <section class="card leaderboard-section">
+      <div class="section-header">
+        <h2>Leaderboard</h2>
+        <span class="section-subtitle">Top performers by points</span>
+      </div>
+      <div class="member-table-wrapper">
+        <table class="member-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Name</th>
+              <th>Student No.</th>
+              <th>Program</th>
+              <th>Points</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardList">
+            <!-- JS populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card members-overview-section">
+      <div class="section-header">
+        <h2>Member Overview</h2>
+        <a href="adminallmembers.html" class="btn btn-outline btn-sm">View All Members</a>
+      </div>
+      <div class="search-container">
+        <input type="search" class="search-input" id="memberOverviewSearch" placeholder="Search members by name, student number, email, or program..." />
+      </div>
+      <div class="member-filters">
+        <div class="filter-group">
+          <label for="filterProgramOverview">Program:</label>
+          <select id="filterProgramOverview" class="filter-select">
+            <option value="all">All Programs</option>
+            <option value="BS Computer Science">BSCS</option>
+            <option value="BS Information Technology">BSIT</option>
+            <option value="BS Information Systems">BSIS</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filterStatusOverview">Status:</label>
+          <select id="filterStatusOverview" class="filter-select">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <button class="btn btn-outline btn-sm" id="clearFiltersOverview">Clear Filters</button>
+      </div>
+      <div class="member-table-wrapper">
+        <table class="member-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Student No.</th>
+              <th>Program</th>
+              <th>Status</th>
+              <th>Participation</th>
+              <th>Points</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="memberOverviewTableBody">
+            <!-- JS populated -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Member Details Modal -->
+  <div class="modal" id="memberModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Member Details</h3>
+        <button class="modal-close" id="closeMemberModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="memberDetails">
+          <!-- JS populated -->
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="closeMemberDetailsBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Member Modal -->
+  <div class="modal" id="editMemberModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Edit Member</h3>
+        <button class="modal-close" id="closeEditMemberModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="editMemberForm">
+          <div class="form-group">
+            <label for="editMemberName">Full Name *</label>
+            <input type="text" id="editMemberName" name="editMemberName" required>
+          </div>
+          <div class="form-group">
+            <label for="editMemberEmail">Email *</label>
+            <input type="email" id="editMemberEmail" name="editMemberEmail" required>
+          </div>
+          <div class="form-group">
+            <label for="editMemberStudentNumber">Student Number *</label>
+            <input type="text" id="editMemberStudentNumber" name="editMemberStudentNumber" required>
+          </div>
+          <div class="form-group">
+            <label for="editMemberProgram">Program *</label>
+            <input type="text" id="editMemberProgram" name="editMemberProgram" required>
+          </div>
+          <div class="form-group">
+            <label for="editMemberStatus">Status *</label>
+            <select id="editMemberStatus" name="editMemberStatus" required>
+              <option value="active">Active</option>
+              <option value="suspended">Suspended</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editMemberParticipation">Participation (%)</label>
+            <input type="number" id="editMemberParticipation" name="editMemberParticipation" min="0" max="100" step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="editMemberPoints">Points</label>
+            <input type="number" id="editMemberPoints" name="editMemberPoints" min="0" step="1">
+          </div>
+        </form>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" id="cancelEditMemberBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="submitEditMemberBtn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Confirmation Modal -->
+  <div id="logoutModal" class="logout-modal-overlay">
+    <div class="logout-modal-container">
+      <div class="logout-modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </div>
+      <h2 class="logout-modal-title">Logout?</h2>
+      <p class="logout-modal-message">Are you sure you want to logout?</p>
+      <p class="logout-modal-warning">You will need to login again to access the system.</p>
+      <div class="logout-modal-actions">
+        <button class="logout-modal-btn logout-modal-btn-cancel" id="cancelLogoutBtn">Cancel</button>
+        <button class="logout-modal-btn logout-modal-btn-logout" id="confirmLogoutBtn">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/logout-modal-new.js"></script>
+  <script src="admindashboard.js"></script>
+  <script>initLogoutModalNew('admin');</script>
+</body>
+
+</html>
+

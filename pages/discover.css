@@ -1,0 +1,92 @@
+@import url("../index.css");
+
+.discover-content {
+  padding: 28px 20px 60px;
+  display: grid;
+  gap: 24px;
+}
+
+.discover-intro {
+  background: rgba(18, 24, 39, 0.55);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.discover-intro strong {
+  color: var(--accent);
+}
+
+.discover-split {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.discover-split .card {
+  background: #ffffff;
+  color: #222;
+}
+
+.discover-split .card h2 {
+  margin-top: 0;
+  color: #540b0e;
+}
+
+.discover-split .card ul,
+.discover-split .card ol {
+  padding-left: 20px;
+  color: #333;
+}
+
+.discover-split .card.highlight {
+  background: linear-gradient(135deg, var(--brand), var(--brand-700));
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.discover-split .card.highlight h2,
+.discover-split .card.highlight ol,
+.discover-split .card.highlight li {
+  color: #ffffff;
+}
+
+.discover-split .card.highlight .btn-outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.discover-grid .card {
+  background: linear-gradient(135deg, var(--brand), var(--brand-700));
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.discover-grid .card h3,
+.discover-grid .card p {
+  color: #ffffff;
+}
+
+.discover-grid .link {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cta-group {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .discover-content {
+    padding-top: 120px;
+  }
+
+  .discover-split {
+    grid-template-columns: 1fr;
+  }
+}
+
